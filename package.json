@@ -40,5 +40,8 @@
     "url": "git://github.com/stefanbuck/sails-social-auth-example.git"
   },
   "author": "stefanbuck",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "connect-mongo": "^0.4.1"
+  }
 }
