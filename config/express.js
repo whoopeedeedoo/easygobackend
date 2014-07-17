@@ -66,7 +66,7 @@ module.exports.express = {
     passport.use(new FacebookStrategy({
       clientID: "1429164920704208",
       clientSecret: "85e9cfc6410b801e440f55faa1ee44f2",
-      callbackURL: "auth/facebook/callback"
+      callbackURL: "http://r-before-you-run.herokuapp.com/auth/facebook/callback"
     }, verifyHandler));
 
     passport.use(new GoogleStrategy({
