@@ -46,7 +46,7 @@ module.exports = {
           return;
         }
 
-        res.redirect('/');
+        res.redirect('/auth/fb_success');
         return;
       });
     })(req, res);
@@ -84,5 +84,12 @@ module.exports = {
         return;
       });
     })(req, res);
-  }
+  },
+
+  fb_success: function(req, res){
+    res.view('home/fb_success', {
+      info: "fb_success",
+    })
+  },
 };
+

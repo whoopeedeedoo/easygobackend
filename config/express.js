@@ -1,4 +1,4 @@
-var local = require("./local");
+var local = require('./local');
 
 var passport = require('passport')
     , GitHubStrategy = require('passport-github').Strategy
