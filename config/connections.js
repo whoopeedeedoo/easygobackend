@@ -17,6 +17,7 @@
  * For more information on configuration, check out:
  * http://links.sailsjs.org/docs/config/connections
  */
+var local = require("./local");
 
 module.exports.connections = {
 
@@ -49,12 +50,12 @@ module.exports.connections = {
   // npm install sails-mongo
   //
   mongo: {
-      module: 'sails-mongo',
-      host: "oceanic.mongohq.com",
-      port: 10065,
-      user: "pppp",
-      password: "1111",
-      database: "whoopeedeedoo"
+      module: local.mongo.module,
+      host: local.mongo.host,
+      port: local.mongo.port,
+      user: local.mongo.user,
+      password: local.mongo.password,
+      database: local.mongo.database
   },
 
   // PostgreSQL is another officially supported relational database.

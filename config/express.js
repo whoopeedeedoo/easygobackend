@@ -1,3 +1,5 @@
+var local = require("./local");
+
 var passport = require('passport')
     , GitHubStrategy = require('passport-github').Strategy
     , FacebookStrategy = require('passport-facebook').Strategy
@@ -64,9 +66,9 @@ module.exports.express = {
     }, verifyHandler));
 
     passport.use(new FacebookStrategy({
-      clientID: "1429164920704208",
-      clientSecret: "85e9cfc6410b801e440f55faa1ee44f2",
-      callbackURL: "http://r-before-you-run.herokuapp.com/auth/facebook/callback"
+      clientID: local.fb.clientID,
+      clientSecret: local.fb.clientSecret,
+      callbackURL: local.fb.callbackURL
     }, verifyHandler));
 
     passport.use(new GoogleStrategy({
