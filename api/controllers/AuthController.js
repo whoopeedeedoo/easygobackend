@@ -10,7 +10,8 @@ var passport = require('passport');
 module.exports = {
 
   index: function(req, res) {
-    res.view('Easy_Go/easy_go_V2');
+    //res.view('Easy_Go/easy_go_V2');
+    res.view('auth/easy_go_V2');
   },
 
   logout: function(req, res) {
