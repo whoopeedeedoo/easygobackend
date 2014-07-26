@@ -92,8 +92,6 @@ module.exports = {
         info.message = "yes";
         info = _.extend(info, req.user);
     }
-    console.log(req.user);
-    console.log(req.session);
         res.json(info);
   },
 };

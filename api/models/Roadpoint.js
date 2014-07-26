@@ -9,10 +9,12 @@ module.exports = {
 
             connection: 'mongo',
 	attributes: {
-                        time: 'Date',
-		latitude: 'String',
-		longitude: 'String',
-                        name: 'String',
-                        place: 'String'
+                        "startDate": "String",
+                        "time": "String",
+                        "endDate": "String",
+                        "latitude": "String",
+                        "longitude": "String",
+                        "name": "String",
+                        "place": "String"
 	}
 };

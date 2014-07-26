@@ -6,6 +6,7 @@
  */
 
 var fs = require('fs');
+var _ = require('underscore');
 
 var getDistance = function(lat1, lon1, lat2, lon2){
     //算兩點距離
@@ -19,10 +20,30 @@ var getDistance = function(lat1, lon1, lat2, lon2){
  return d;//單位km
 }
 
+var isDateRight = function( startDate, endDate ){
+    //console.log("startDate is "+ startDate);
+    //console.log("endDate is " + endDate);
+     var now = new Date();
+     now = now.getTime();
+     startDate = new Date(startDate);//db資料轉成Date object
+     startDate = startDate.getTime();//日期物件轉換格式成十進位數字
+     endDate = new Date(endDate);
+     endDate = endDate.getTime();
+     if(startDate==endDate)
+     {
+        endDate+=86399999;
+     }
+     if(now >= startDate && now <= endDate)
+     {
+        return 1;
+     }
+     return 0;
+}
+
 module.exports = {
 
 'js_master' : function (req, res){
-    /*
+
         fs.readFile(__dirname+"/../../assets/indieMusic.json", function (err, da) {
             if (err) {console.log(err);}
 
@@ -34,9 +55,9 @@ module.exports = {
                  });
             });
         });
-*/
 
 
+/*
         fs.readFile(__dirname+"/../../assets/hypage.json", function (err, da) {
             if (err) {console.log(err);}
 
@@ -48,6 +69,7 @@ module.exports = {
                  });
             });
         });
+*/
 },
 'test': function(req, res){
 
@@ -59,7 +81,7 @@ var n = d.getTime();
         console.log(n);
         */
 
-
+/*
  //搜尋db
 Roadpoint.find( function(err, roadpoint) {
       if (roadpoint) {
@@ -77,49 +99,45 @@ Roadpoint.find( function(err, roadpoint) {
             })//end forEach
         }
 });
+*/
+console.log
 
     res.end("sda");
 },
 'check_roadpoint': function (req, res){
-    var lat_self = 25,//使用者所在緯度
-    lon_self = 121,//使用者所在經度
-    rad = 1,//要求半徑km
-    result = [];//回傳的結果
+    var lat_self = req.body.lat_self,//使用者所在緯度
+    lon_self = req.body.lon_self,//使用者所在經度
+    rad = 10,//req.body.rad,//要求半徑km
+    array_temp=[],
+    result = {message: 'no', data:[]};//回傳的結果
 
-
-//搜尋單日事件
+//搜尋事件路點
 Roadpoint.find( function(err, roadpoint) {
       if (roadpoint) {
         console.log("ok");
         var data = roadpoint;//JSON.parse(roadpoint);
 
             data.forEach(function(value, index){
-                 console.log(index);
-                 if( getDistance( lat_self, lon_self, value.latitude, value.longitude)< rad)
+                 if( isDateRight( value.startDate, value.endDate ) )
                  {
-                    result.push(value);
+                     if( getDistance( lat_self, lon_self, value.latitude, value.longitude) <= rad)
+                    {
+                        array_temp.push( {title: value.time + value.place+ '-' + value.name, latitude: value.latitude, longitude: value.longitude} );
+                        result.message = "yes";
+                    }
                  }
-            });
+
+            });//end data.forEach
+result.data = array_temp;
+console.log("ukkkkkkkkkkk");
+console.log(result);
+res.json(result);
+//res.end(result.toString());
         }
-    });//end Roadpoint.find
-//搜尋長期事件
-Roadpoint_longterm.find( function(err, roadpoint_longterm) {
-      if (roadpoint_longterm) {
-        console.log("ok");
-        var data = roadpoint_longterm;//JSON.parse(roadpoint);
 
-            data.forEach(function(value, index){
-                 console.log(index);
-                 if( getDistance( lat_self, lon_self, value.latitude, value.longitude)< rad)
-                 {
-                    result.push(value);
-                 }
-            });
-        }
-});//end Roadpoint_longterm.find
+    })
 
-
-}
+}//end check_roadpoint
 
 };
 
