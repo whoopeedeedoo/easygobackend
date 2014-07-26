@@ -32,7 +32,7 @@ module.exports.routes = {
 
   '/login' : {
     controller : 'auth',
-    action     : 'index'
+    action     : 'facebook'
   },
   '/auth/facebook/error': {
     controller: 'auth',
@@ -42,14 +42,17 @@ module.exports.routes = {
     controller : 'auth',
     action     : 'logout'
   },
-
+  '/isAuthenticated' :{
+    controller : 'auth',
+    action: 'isAuthenticated'
+  },
   'post /fbapi/fbcheckin':{
     controller: 'fbapi',
     action: 'index'
   },
 
   'post /fbapi/token': {
-    controller: "fbapi", 
+    controller: "fbapi",
     action: "getToken"
   },
 
