@@ -952,18 +952,21 @@ function sendd(cgoy,ky,li,tk,rad,center,goyCtr,upL,allFlag)
 											if(flagFinded==0){
 
 											  $("#selectList0").html('沒有找到任何路點');
-											  alertify.log('沒有找到任何路點');
+											  
 											  $("#wpse").html('<option>請先搜尋路點</option>');
 											  $("#wpse").selectmenu('refresh');
 											  setRWP();
 											  setB1();
-											  setB2(F);
+											  setB2();
+											  $( "#popupBasic" ).popup( "close" );
+											  alertify.log('沒有找到任何路點');
 
 
 											}else if(flagFinded>0)
 											{
 											  $("#selectList0").html('找到'+flagFinded+'個路點');
 
+										 $( "#popupBasic" ).popup( "close" );
 										alertify.success('找到'+flagFinded+'個路點');
 
 											  $("#wpse").prepend('<option>請選擇最多六個路點</option>');
@@ -1868,6 +1871,7 @@ dts00={ path: arry00, userid: uid};
 
                 success: function(msg){
 				$("#selectList0").html('收藏完成');
+				$( "#popupBasic" ).popup( "close" );
 				alertify.success("收藏完成");
 
 				autoLatLng=[];
