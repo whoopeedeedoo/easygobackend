@@ -11,12 +11,12 @@ var _ = require('underscore');
 module.exports = {
 
   index: function(req, res) {
-    res.view("auth/easy_go_V2.ejs");
+    res.view("/");
   },
 
   logout: function(req, res) {
     req.logout();
-    res.redirect('/');
+    res.end();
   },
 
   // http://developer.github.com/v3/
@@ -47,8 +47,8 @@ module.exports = {
           res.redirect('/auth/facebook/error');
           return;
         }
-
-        res.redirect('/');
+        //res.end();
+        res.redirect('/auth/isAuthenticated');
         return;
       });
     })(req, res);
@@ -88,16 +88,8 @@ module.exports = {
     })(req, res);
   },
 
-  fb_success: function(req, res){
-    res.view('home/fb_success', {
-      info: "fb_success",
-    })
-  },
-
   fb_error: function(req, res){
-    res.view('auth/fb_error', {
-      info: "fb_success",
-    })
+    res.redirect('/');
   },
   isAuthenticated: function(req, res){
    var info = {message:"no"};

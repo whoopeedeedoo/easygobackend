@@ -32,7 +32,7 @@ module.exports.routes = {
 
   '/login' : {
     controller : 'auth',
-    action     : 'index'
+    action     : 'facebook'
   },
   '/auth/facebook/error': {
     controller: 'auth',
