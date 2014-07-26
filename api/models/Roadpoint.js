@@ -8,10 +8,10 @@
 module.exports = {
 
 	attributes: {
-		id: String,
-		name: String,
-		latitude: String,
-		longitude: String,
-		time: Date
+		id: 'String',
+		name: 'String',
+		latitude: 'String',
+		longitude: 'String',
+		time: 'Date'
 	}
 };
