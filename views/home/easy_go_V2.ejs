@@ -789,6 +789,26 @@ function sendd(cgoy,ky,li,tk,rad,center,goyCtr,upL,allFlag)
 												sendd(cgoy,ky,li,tk,rad,center,goyCtr,upL,allFlag);
 											}else
 											{
+											
+											var rad1=rad;
+											var tttt=center.split(",");
+											var ttt0=tttt[0];
+											var ttt1=tttt[1];
+												
+										
+				var dts111={ lat_self: ttt0, lon_self: ttt1,rad: rad1};
+										
+										
+										
+										$.ajax(
+				 						{   url: '/check_roadpoint',
+				     						type: 'POST',
+											data:dts111,
+	  				 						dataType: "json",
+                     						success: function(Jdata3) { 
+												
+												alert('fuck');
+												
 												rngMax=flagFinded;
 											
 											if(flagFinded==0){
@@ -1157,13 +1177,19 @@ setB2();
 						});
                         
 
-}
+}//else flagFinded>0
 												
-												
-												
-											}
-
 											},
+											error: function(xhr, ajaxOptions, thrownError) {
+									          
+											   alert.error(thrownError);
+											   
+                     			            }
+									     });	
+												
+											}//else
+
+											},//success
 											error: function(xhr, ajaxOptions, thrownError) {
 									           setRWP();			
 											   setB1();
