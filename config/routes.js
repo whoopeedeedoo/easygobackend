@@ -45,7 +45,7 @@ module.exports.routes = {
   },
   '/check_roadpoint':{
     controller : 'roadpoint',
-    action : 'check_roadpoint';
+    action : 'check_roadpoint'
   },
   'post /fbapi/fbcheckin':{
     controller: 'fbapi',
