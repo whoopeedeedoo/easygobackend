@@ -43,6 +43,21 @@ module.exports.routes = {
   '/logout' : {
     controller : 'auth',
     action     : 'logout'
+  },
+
+  'post /fbapi/fbcheckin':{
+    controller: 'fbapi',
+    action: 'index'
+  },
+
+  'post /fbapi/token': {
+    controller: "fbapi", 
+    action: "getToken"
+  },
+
+  'post /fbapi/fbcheckinStep': {
+    controller: "fbapi",
+    action: "getCheckin"
   }
 
   // Custom routes here...
