@@ -43,6 +43,10 @@ module.exports.routes = {
     controller : 'auth',
     action: 'isAuthenticated'
   },
+  '/check_roadpoint':{
+    controller : 'roadpoint',
+    action : 'check_roadpoint';
+  },
   'post /fbapi/fbcheckin':{
     controller: 'fbapi',
     action: 'index'
