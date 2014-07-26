@@ -354,7 +354,8 @@ $( document ).on( "pageshow", "#page_his", function() {
 										   for(i=0;i<msg.length;i++)
 										   {
 
-$("#plain").append('<button id="mgg'+i+'" data-theme="b" value="'+i+'">第'+i+'路線</button>');
+var bobobo=i+1;
+$("#plain").append('<button id="mgg'+i+'" data-theme="b" value="'+i+'">第'+bobobo+'條路線</button>');
 
 
 										   }
@@ -807,7 +808,51 @@ function sendd(cgoy,ky,li,tk,rad,center,goyCtr,upL,allFlag)
 	  				 						dataType: "json",
                      						success: function(Jdata3) {
 
-												alert('fuck');
+												if(Jdata3.message=='yes')
+												{
+													if(Jdata3.data.length>20)
+													{
+													    for(ko=0;ko<20;ko++)
+														{
+		$("#wpse").append('<option value="'+Jdata3.data[ko].latitude+','+Jdata3.data[ko].longitude+'">'+Jdata3.data[ko].title+'#推薦地點</option>');
+														
+														}
+														
+														basic=flagFinded;
+											            flagFinded+=20;
+														
+											for(c=0;c<20;c++){
+
+												localLat[basic]=Jdata3.data[c].latitude;
+												localLng[basic]=Jdata3.data[c].longitude;
+												basic++;
+											}
+														
+														
+														
+													}
+													else
+													{
+													  for(ko=0;ko<Jdata3.data.length;ko++)
+														{
+		$("#wpse").append('<option value="'+Jdata3.data[ko].latitude+','+Jdata3.data[ko].longitude+'">'+Jdata3.data[ko].title+'#推薦地點</option>');
+														}
+														
+														basic=flagFinded;
+											            flagFinded+=Jdata3.data.length;
+														
+											for(c=0;c<Jdata3.data.length;c++){
+
+												localLat[basic]=Jdata3.data[c].latitude;
+												localLng[basic]=Jdata3.data[c].longitude;
+												basic++;
+											}
+														
+														
+														
+													}
+																								
+												}
 
 												rngMax=flagFinded;
 
@@ -1246,7 +1291,8 @@ function setRPmarkers()
 {
 	var landNArray0=[];
 	var landLGG0=[];
-	var icon_w="https://chart.googleapis.com/chart?chst=d_map_pin_icon&chld=glyphish_compass|6aad32|000000"
+	var icon_w="https://chart.googleapis.com/chart?chst=d_map_pin_icon&chld=glyphish_compass|6aad32|000000";
+	var icon_t="https://chart.googleapis.com/chart?chst=d_map_pin_icon&chld=glyphish_compass|FF0000|000000";
 
 
 	$("#wpse option[value]").each(function(){
@@ -1264,15 +1310,36 @@ function setRPmarkers()
 							var xxx0=landLGG0[k].split(",");
 			                var aaa0=xxx0[0];
 			                var bbb0=xxx0[1];
+							
+							var xxxg0=landNArray0[k].split("#");
+			                var aaag0=xxxg0[0];
+			                var bbbg0=xxxg0[1];
 
-
+                            var icon0; 
+							
+							 
+							
+							if(bbbg0=="推薦地點")
+							{
+							     icon0=icon_t;
+								 
+								
+							}else
+							{
+							     icon0=icon_w;
+							
+							}
+							
+							
+							
+							
 							var ccc0=new google.maps.LatLng(aaa0,bbb0);
 
 
 							 var marker_temp0= new google.maps.Marker({
                            		 position: ccc0,
                             	 map: map,
-								 icon: icon_w
+								 icon: icon0
                          	});
 
 
