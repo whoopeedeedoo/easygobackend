@@ -39,14 +39,15 @@ module.exports = {
   // https://developers.facebook.com/docs/reference/login/
   facebook: function(req, res) {
     passport.authenticate('facebook', { failureRedirect: '/login', scope: ['email'] }, function(err, user) {
+      //When the login operation completes, user will be assigned to req.user.
       req.logIn(user, function(err) {
         if (err) {
           console.log(err);
-          res.view('500');
+          res.redirect('/auth/facebook/error');
           return;
         }
 
-        res.redirect('/auth/fb_success');
+        res.redirect('/');
         return;
       });
     })(req, res);
@@ -88,6 +89,12 @@ module.exports = {
 
   fb_success: function(req, res){
     res.view('home/fb_success', {
+      info: "fb_success",
+    })
+  },
+
+  fb_error: function(req, res){
+    res.view('auth/fb_error', {
       info: "fb_success",
     })
   },

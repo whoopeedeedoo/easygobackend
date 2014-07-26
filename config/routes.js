@@ -27,19 +27,17 @@ module.exports.routes = {
   //
   // (Alternatively, remove this and add an `index.html` file in your `assets` directory)
   '/': {
-    controller: 'home'
+    controller: 'home',
   },
 
   '/login' : {
     controller : 'auth',
     action     : 'index'
   },
-  /*
-  '/auth/facebook/callback': {
+  '/auth/facebook/error': {
     controller: 'auth',
-    action: 'fb_callback'
+    action: 'fb_error'
   },
-  */
   '/logout' : {
     controller : 'auth',
     action     : 'logout'
