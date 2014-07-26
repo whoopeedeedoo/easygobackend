@@ -60,6 +60,11 @@ module.exports.routes = {
   'post /fbapi/fbcheckinStep': {
     controller: "fbapi",
     action: "getCheckin"
+  },
+
+  'get /history/find/user/:id':{
+    controller: 'history',
+    action: 'findUser'
   }
 
   // Custom routes here...
