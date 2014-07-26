@@ -20,19 +20,18 @@ var getDistance = function(lat1, lon1, lat2, lon2){
  return d;//單位km
 }
 
-var isDateRight = function( startDate, endDate ){
+var isDateRight = function( startDate, startTime, endDate ){
     //console.log("startDate is "+ startDate);
     //console.log("endDate is " + endDate);
      var now = new Date();
      now = now.getTime();
      startDate = new Date(startDate);//db資料轉成Date object
      startDate = startDate.getTime();//日期物件轉換格式成十進位數字
+     startDate += startTime;
      endDate = new Date(endDate);
      endDate = endDate.getTime();
-     if(startDate==endDate)
-     {
-        endDate+=86399999;
-     }
+     endDate +=86399999;//假定活動到23:59:59結束
+
      if(now >= startDate && now <= endDate)
      {
         return 1;
@@ -107,7 +106,7 @@ console.log
 'check_roadpoint': function (req, res){
     var lat_self = req.body.lat_self,//使用者所在緯度
     lon_self = req.body.lon_self,//使用者所在經度
-    rad = 10,//req.body.rad,//要求半徑km
+    rad = req.body.rad,//要求半徑km
     array_temp=[],
     result = {message: 'no', data:[]};//回傳的結果
 
@@ -118,7 +117,7 @@ Roadpoint.find( function(err, roadpoint) {
         var data = roadpoint;//JSON.parse(roadpoint);
 
             data.forEach(function(value, index){
-                 if( isDateRight( value.startDate, value.endDate ) )
+                 if( isDateRight( value.startDate, value.time, value.endDate ) )
                  {
                      if( getDistance( lat_self, lon_self, value.latitude, value.longitude) <= rad)
                     {
@@ -129,7 +128,6 @@ Roadpoint.find( function(err, roadpoint) {
 
             });//end data.forEach
 result.data = array_temp;
-console.log("ukkkkkkkkkkk");
 console.log(result);
 res.json(result);
 //res.end(result.toString());
