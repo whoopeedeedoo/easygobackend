@@ -11,7 +11,7 @@ var _ = require('underscore');
 module.exports = {
 
   index: function(req, res) {
-    res.view();
+    res.view("auth/easy_go_V2.ejs");
   },
 
   logout: function(req, res) {
