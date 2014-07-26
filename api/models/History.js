@@ -7,9 +7,10 @@
 
 module.exports = {
 
+	connection: 'mongo',
 	attributes: {
 		path: [],
-		userid: 'STRING'
+		userid: 'string'
 
 	}
 };
