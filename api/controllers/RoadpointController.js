@@ -25,9 +25,9 @@ var isDateRight = function( startDate, startTime, endDate ){
     //console.log("endDate is " + endDate);
      var now = new Date();
      now = now.getTime();
+     startDate += " "+startTime;
      startDate = new Date(startDate);//db資料轉成Date object
      startDate = startDate.getTime();//日期物件轉換格式成十進位數字
-     startDate += startTime;
      endDate = new Date(endDate);
      endDate = endDate.getTime();
      endDate +=86399999;//假定活動到23:59:59結束
@@ -43,7 +43,7 @@ module.exports = {
 
 'js_master' : function (req, res){
 
-        fs.readFile(__dirname+"/../../assets/indieMusic.json", function (err, da) {
+        fs.readFile(__dirname+"/../../assets/ct.json", function (err, da) {
             if (err) {console.log(err);}
 
             var data = JSON.parse(da.toString());
