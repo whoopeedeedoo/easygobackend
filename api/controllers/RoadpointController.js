@@ -20,19 +20,18 @@ var getDistance = function(lat1, lon1, lat2, lon2){
  return d;//單位km
 }
 
-var isDateRight = function( startDate, endDate ){
+var isDateRight = function( startDate, startTime, endDate ){
     //console.log("startDate is "+ startDate);
     //console.log("endDate is " + endDate);
      var now = new Date();
      now = now.getTime();
+     startDate += " "+startTime;
      startDate = new Date(startDate);//db資料轉成Date object
      startDate = startDate.getTime();//日期物件轉換格式成十進位數字
      endDate = new Date(endDate);
      endDate = endDate.getTime();
-     if(startDate==endDate)
-     {
-        endDate+=86399999;
-     }
+     endDate +=86399999;//假定活動到23:59:59結束
+
      if(now >= startDate && now <= endDate)
      {
         return 1;
@@ -44,7 +43,7 @@ module.exports = {
 
 'js_master' : function (req, res){
 
-        fs.readFile(__dirname+"/../../assets/indieMusic.json", function (err, da) {
+        fs.readFile(__dirname+"/../../assets/ct.json", function (err, da) {
             if (err) {console.log(err);}
 
             var data = JSON.parse(da.toString());
@@ -122,7 +121,7 @@ Roadpoint.find( function(err, roadpoint) {
         var data = roadpoint;//JSON.parse(roadpoint);
 
             data.forEach(function(value, index){
-                 if( isDateRight( value.startDate, value.endDate ) )
+                 if( isDateRight( value.startDate, value.time, value.endDate ) )
                  {
                      if( getDistance( lat_self, lon_self, value.latitude, value.longitude) <= rad)
                     {
@@ -133,7 +132,6 @@ Roadpoint.find( function(err, roadpoint) {
 
             });//end data.forEach
 result.data = array_temp;
-console.log("ukkkkkkkkkkk");
 console.log(result);
 res.json(result);
 //res.end(result.toString());
