@@ -810,21 +810,68 @@ function sendd(cgoy,ky,li,tk,rad,center,goyCtr,upL,allFlag)
 
 												if(Jdata3.message=='yes')
 												{
+													
+													
 													if(Jdata3.data.length>20)
 													{
-													    for(ko=0;ko<20;ko++)
+														var aryCtr=0;
+														var uioyy=[];
+														var uioyy2=[];
+														
+														while((uioyy.length<20)&&(aryCtr<Jdata3.data.length))
 														{
-		$("#wpse").append('<option value="'+Jdata3.data[ko].latitude+','+Jdata3.data[ko].longitude+'">'+Jdata3.data[ko].title+'#推薦地點</option>');
+														   var flagy=0;
+								var qwas=Jdata3.data[aryCtr].latitude+','+Jdata3.data[aryCtr].longitude;
+								var qwas2=Jdata3.data[aryCtr].title;
+														   
+														  
+														   
+														   if(uioyy.length==0)
+														   {
+														   	  uioyy.push(qwas);
+															  uioyy2.push(qwas2);
+															  flagy=1;
+															  
+														   }else{
+
+														   for(iu=0;iu<uioyy.length;iu++)
+														   {
+															  
+															  
+															  if(qwas==uioyy[iu])
+															  {
+															    flagy=1;
+																
+															  }
+														   }
+														   }
+														   
+														   if(flagy==0)
+														   {
+														      uioyy.push(qwas);
+															  uioyy2.push(qwas2);
+														   }
+														   aryCtr++;
+														}
+														
+														
+														for(ko=0;ko<uioyy.length;ko++)
+														{
+		$("#wpse").append('<option value="'+uioyy[ko]+'">'+uioyy2[ko]+'#推薦地點</option>');
 														
 														}
 														
 														basic=flagFinded;
-											            flagFinded+=20;
+											            flagFinded+=uioyy.length;
 														
-											for(c=0;c<20;c++){
+											for(c=0;c<uioyy.length;c++){
 
-												localLat[basic]=Jdata3.data[c].latitude;
-												localLng[basic]=Jdata3.data[c].longitude;
+												var xxw=uioyy[c].split(",");
+			                                    var aaw=xxw[0];
+			                                    var bbw=xxw[1];
+												
+												localLat[basic]=aaw;
+												localLng[basic]=bbw;
 												basic++;
 											}
 														
@@ -833,18 +880,64 @@ function sendd(cgoy,ky,li,tk,rad,center,goyCtr,upL,allFlag)
 													}
 													else
 													{
-													  for(ko=0;ko<Jdata3.data.length;ko++)
+													var aryCtr=0;
+														var uioyy=[];
+														var uioyy2=[];
+														
+														while((uioyy.length<Jdata3.data.length)&&(aryCtr<Jdata3.data.length))
 														{
-		$("#wpse").append('<option value="'+Jdata3.data[ko].latitude+','+Jdata3.data[ko].longitude+'">'+Jdata3.data[ko].title+'#推薦地點</option>');
+														   var flagy=0;
+								var qwas=Jdata3.data[aryCtr].latitude+','+Jdata3.data[aryCtr].longitude;
+								var qwas2=Jdata3.data[aryCtr].title;
+														   
+														  
+														   
+														   if(uioyy.length==0)
+														   {
+														   	  uioyy.push(qwas);
+															  uioyy2.push(qwas2);
+															  flagy=1;
+															  
+														   }else{
+
+														   for(iu=0;iu<uioyy.length;iu++)
+														   {
+															  
+															  
+															  if(qwas==uioyy[iu])
+															  {
+															    flagy=1;
+																
+															  }
+														   }
+														   }
+														   
+														   if(flagy==0)
+														   {
+														      uioyy.push(qwas);
+															  uioyy2.push(qwas2);
+														   }
+														   aryCtr++;
+														}
+														
+														
+														for(ko=0;ko<uioyy.length;ko++)
+														{
+		$("#wpse").append('<option value="'+uioyy[ko]+'">'+uioyy2[ko]+'#推薦地點</option>');
+														
 														}
 														
 														basic=flagFinded;
-											            flagFinded+=Jdata3.data.length;
+											            flagFinded+=uioyy.length;
 														
-											for(c=0;c<Jdata3.data.length;c++){
+											for(c=0;c<uioyy.length;c++){
 
-												localLat[basic]=Jdata3.data[c].latitude;
-												localLng[basic]=Jdata3.data[c].longitude;
+												var xxw=uioyy[c].split(",");
+			                                    var aaw=xxw[0];
+			                                    var bbw=xxw[1];
+												
+												localLat[basic]=aaw;
+												localLng[basic]=bbw;
 												basic++;
 											}
 														
