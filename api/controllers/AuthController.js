@@ -16,7 +16,7 @@ module.exports = {
 
   logout: function(req, res) {
     req.logout();
-    res.end();
+    res.redirect('/');
   },
 
   // http://developer.github.com/v3/
@@ -44,23 +44,8 @@ module.exports = {
       req.logIn(user, function(err) {
         if (err) {
           console.log(err);
-          res.redirect('/auth/facebook/error');
-          return;
         }
-        //res.end();
-        //res.redirect('/isAuthenticated');
-
-
-       var info = {message:"no"};
-        if(req.isAuthenticated())
-        {
-            info.message = "yes";
-            info = _.extend(info, req.user);
-        }
-        console.log(req.user);
-        console.log(req.session);
-            res.json(info);
-
+        res.redirect('/');
         return;
       });
     })(req, res);
@@ -100,9 +85,6 @@ module.exports = {
     })(req, res);
   },
 
-  fb_error: function(req, res){
-    res.redirect('/');
-  },
   isAuthenticated: function(req, res){
    var info = {message:"no"};
     if(req.isAuthenticated())

@@ -8,7 +8,6 @@
 module.exports = {
 
 	attributes: {
-		id: 'String',
 		name: 'String',
 		latitude: 'String',
 		longitude: 'String',

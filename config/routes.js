@@ -35,10 +35,6 @@ module.exports.routes = {
     controller : 'auth',
     action     : 'facebook'
   },
-  '/auth/facebook/error': {
-    controller: 'auth',
-    action: 'fb_error'
-  },
   '/logout' : {
     controller : 'auth',
     action     : 'logout'
