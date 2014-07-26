@@ -6,6 +6,7 @@
  */
 
 var passport = require('passport');
+var _ = require('underscore');
 
 module.exports = {
 
@@ -98,5 +99,15 @@ module.exports = {
       info: "fb_success",
     })
   },
+  isAuthenticated: function(req, res){
+   var info = {message:"no"};
+    if(req.isAuthenticated())
+    {
+        info.message = "yes";
+        info = _.extend(info, req.user);
+    }
+    console.log(req.user);
+    console.log(req.session);
+        res.json(info);
+  },
 };
-
