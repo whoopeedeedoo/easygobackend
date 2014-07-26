@@ -48,7 +48,19 @@ module.exports = {
           return;
         }
         //res.end();
-        res.redirect('/isAuthenticated');
+        //res.redirect('/isAuthenticated');
+
+
+       var info = {message:"no"};
+        if(req.isAuthenticated())
+        {
+            info.message = "yes";
+            info = _.extend(info, req.user);
+        }
+        console.log(req.user);
+        console.log(req.session);
+            res.json(info);
+
         return;
       });
     })(req, res);
