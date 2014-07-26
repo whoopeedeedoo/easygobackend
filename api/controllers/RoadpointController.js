@@ -107,9 +107,13 @@ console.log
 'check_roadpoint': function (req, res){
     var lat_self = req.body.lat_self,//使用者所在緯度
     lon_self = req.body.lon_self,//使用者所在經度
-    rad = 10,//req.body.rad,//要求半徑km
+    rad = req.body.rad,//要求半徑km
     array_temp=[],
     result = {message: 'no', data:[]};//回傳的結果
+
+console.log(lat_self);
+console.log(lon_self);
+console.log(rad);
 
 //搜尋事件路點
 Roadpoint.find( function(err, roadpoint) {
