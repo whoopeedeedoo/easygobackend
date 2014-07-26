@@ -8,7 +8,10 @@
 module.exports = {
 
   index: function(req, res) {
-    res.view('auth/easy_go_V2');
+
+    res.view('home/easy_go_V2' ,{
+      //user: req.user
+    });
     //console.log(req.user);
   }
 };
