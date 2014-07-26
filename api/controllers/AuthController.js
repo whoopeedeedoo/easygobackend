@@ -48,7 +48,7 @@ module.exports = {
           return;
         }
         //res.end();
-        res.redirect('/auth/isAuthenticated');
+        res.redirect('/isAuthenticated');
         return;
       });
     })(req, res);
