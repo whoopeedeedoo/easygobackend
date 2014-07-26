@@ -1714,6 +1714,7 @@ function hisRT()
 	}
 	marker_s=null;
     sp=null;
+	$("#start").val('');
 	
 	
    if(marker_e!=null)
@@ -1723,6 +1724,7 @@ function hisRT()
 	}
 	marker_e=null;
     ep=null;
+	$("#end").val('');
   
   $("#selectList0").html('');
 		$("#wpse").off();
@@ -1966,6 +1968,40 @@ var lntt=pth_j.length-1;
 		 
 		 
 		                 });
+						 
+					$("#crossBTN").on( "click",function() {
+							
+						
+						$("#run").addClass('ui-disabled');
+		 				$("#ftrr").html(""); 
+						$('#ftrl').html("");
+		 				tctr=0;
+		                s_flag=0;
+						clearInterval(timeoutId);
+			            clearInterval(timeoutId2);
+			            if(marker_rt!=null)
+					    {
+							marker_rt.setMap(null);
+							google.maps.event.trigger(map, "resize");
+						}
+			            $("#run").html('START');
+						
+						$("#run").off();
+						if(directionsDisplay!=null)
+						{
+							directionsDisplay.setMap(null);
+							google.maps.event.trigger(map,"resize");
+						}
+						google.maps.event.clearListeners(map, "click");
+						for(p=0;p<markerArray.length;p++)
+						{
+							markerArray[p].setMap(null);
+							google.maps.event.trigger(map, "resize");
+						}
+						markerArray=[];
+											
+                              $("#crossBTN").off();
+					});
   
 				
 				
