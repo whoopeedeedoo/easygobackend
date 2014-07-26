@@ -17,7 +17,7 @@
  * For more information on configuration, check out:
  * http://links.sailsjs.org/docs/config/connections
  */
-var local = require("./local");
+var local = require('./local');
 
 module.exports.connections = {
 
