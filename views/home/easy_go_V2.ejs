@@ -128,7 +128,7 @@ max-width: 100%;
         終點：<br>
         <input type="text" id="end" data-mini="true">
         <a href="#" data-role="button" id="d2" data-inline="true" data-mini="true">現在位置</a>
-        <a href="#" data-role="button" id="b2" data-inline="true" data-mini="true">確認終點</a><br><br>
+        <a href="#" data-role="button" id="b2" data-inline="true" data-mini="true">確認終點</a><br>
 
       <div data-role="collapsible" data-mini="true" id="bigger">
    <h3>路點類型</h3>
@@ -219,14 +219,13 @@ max-width: 100%;
 
 
         路點關鍵字：<br>
-        <input type="search" name="keyword" id="key" data-mini="true"><br>
+        <input type="search" name="keyword" id="key" data-mini="true">
 
-        <a href="#" data-role="button" id="rwp" data-mini="true">搜尋路點</a><br>
+        <a href="#" data-role="button" id="rwp" data-mini="true" style="margin-top:10px;">搜尋路點</a>
 
-		<a href="#" data-role="button" id="save_route" data-mini="true">收藏路線</a><br>
+		<a href="#" data-role="button" id="save_route" data-mini="true" style="margin-top:10px;">收藏路線</a><br>
 
-        <div id="selectList0">
-
+        <div id="selectList0" style="padding-top:0px;">
         </div>
 
 		</div>
@@ -349,8 +348,9 @@ $( document ).on( "pageshow", "#page_his", function() {
 
                 						success: function(msg){
 
-
-
+										      alertify.success("找到"+msg.length+"條路線");
+										   
+										   
 										   for(i=0;i<msg.length;i++)
 										   {
 
@@ -444,9 +444,13 @@ $( document ).on( "pageshow", "#page_1", function() {
 
 $( document ).on( "pageshow", "#map-page", function() {
 
+if(map!=null)
+{
+	google.maps.event.trigger(map, "resize");  
+}
+
+
 hisRT();
-
-
 
 $.ajax({
                 url: '/isAuthenticated',
@@ -522,7 +526,7 @@ $("#bigger").on( "collapsibleexpand",function() {
 
 	var offst = $("#popupBasic").offset();
 
-	$("#popupBasic-screen").height(offst.top+ $("#popupBasic").outerHeight());
+	$("#popupBasic-screen").height(offst.top+ $("#popupBasic").outerHeight()+25);
 
 
 });
@@ -530,7 +534,7 @@ $("#bigger").on( "collapsibleexpand",function() {
 $("#bigger").on( "collapsiblecollapse",function() {
 
 
-	$("#popupBasic-screen").height(window.innerHeight);
+	$("#popupBasic-screen").height(window.innerHeight+20);
 
 
 });
@@ -542,9 +546,9 @@ $("#popupBasic").on( "popupafteropen",function() {
 
 	var offst = $("#popupBasic").offset();
 
-	$("#popupBasic-screen").height(offst.top+ $("#popupBasic").outerHeight());
+	$("#popupBasic-screen").height(offst.top+ $("#popupBasic").outerHeight()+25);
 
-	}
+	}else{$("#popupBasic-screen").height(window.innerHeight+20);}
 
 	//$('ul.load_details').css({visibility,"visible"});
 $("#map-canvas").css({visibility:"hidden"});
@@ -951,7 +955,8 @@ function sendd(cgoy,ky,li,tk,rad,center,goyCtr,upL,allFlag)
 
 											if(flagFinded==0){
 
-											  $("#selectList0").html('沒有找到任何路點');
+											  $("#selectList0").html('沒有找到任何路點'); 
+											  
 											  
 											  $("#wpse").html('<option>請先搜尋路點</option>');
 											  $("#wpse").selectmenu('refresh');
@@ -965,6 +970,7 @@ function sendd(cgoy,ky,li,tk,rad,center,goyCtr,upL,allFlag)
 											}else if(flagFinded>0)
 											{
 											  $("#selectList0").html('找到'+flagFinded+'個路點');
+											  
 
 										 $( "#popupBasic" ).popup( "close" );
 										alertify.success('找到'+flagFinded+'個路點');
@@ -1552,9 +1558,11 @@ function myFunc(bbbd)
 
 function setRWP()
 {
+	
 	$("#rwp").on( "click",function() {
-
-	        if((sp!=null)&&(ep!=null)){
+			
+			
+			if((sp!=null)&&(ep!=null)){
 
 
 					   $("#rwp").off();
@@ -1610,6 +1618,10 @@ function setRWP()
 
 
 									$("#selectList0").html('載入中請耐心等候');
+									 
+									
+									
+									
 											$("#wpse").off();
         									$("#wpse").html('');
 											$("#crossBTN").off();
@@ -1700,6 +1712,8 @@ function setB1()
 		sp=results[0].geometry.location;
 
 		$("#selectList0").html('');
+		
+		
 		$("#wpse").off();
 		$("#crossBTN").off();
 
@@ -1774,6 +1788,9 @@ function setB2()
 		ep=results[0].geometry.location;
 
 		$("#selectList0").html('');
+		
+		
+		
 		$("#wpse").off();
 		$("#crossBTN").off();
         $("#wpse").html('<option>請先搜尋路點</option>');
@@ -1841,6 +1858,7 @@ $("#save_route").off();
 
 $("#selectList0").html('收藏中請稍候');
 
+
 var spt=sp.lat()+','+sp.lng();
 var ept=ep.lat()+','+ep.lng();
 
@@ -1871,6 +1889,8 @@ dts00={ path: arry00, userid: uid};
 
                 success: function(msg){
 				$("#selectList0").html('收藏完成');
+	
+				
 				$( "#popupBasic" ).popup( "close" );
 				alertify.success("收藏完成");
 
@@ -1917,6 +1937,9 @@ function hisRT()
 	$("#end").val('');
 
   $("#selectList0").html('');
+
+  
+  
 		$("#wpse").off();
 		$("#crossBTN").off();
 
