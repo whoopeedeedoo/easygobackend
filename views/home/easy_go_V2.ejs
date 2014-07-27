@@ -1472,7 +1472,6 @@ function setRPmarkers()
 
 							 if(bbbg0=="推薦地點")
 							{
-							     marker_temp0.setAnimation(google.maps.Animation.BOUNCE);
 								 markerArrayt.push(marker_temp0);
 							}else
 							{
@@ -1484,8 +1483,14 @@ function setRPmarkers()
 						 }
 
 
-mygodd=1;
 
+for(i=0;i<markerArrayt.length;i++)
+{
+		
+	markerArrayt[i].setAnimation(google.maps.Animation.BOUNCE);
+			
+}
+mygodd=1;
 
 
 }
