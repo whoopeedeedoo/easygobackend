@@ -867,8 +867,9 @@ function sendd(cgoy,ky,li,tk,rad,center,goyCtr,upL,allFlag)
 															  uioyy2.push(qwas2);
 														   }else if(flagy==1)
 														   {
-														      uioyy2[rdr]+='&nbsp;&nbsp;&nbsp;&nbsp;&&nbsp;&nbsp;&nbsp;&nbsp;';
+														      uioyy2[rdr]+='&';
 															  uioyy2[rdr]+=qwas2;
+														
 														   }
 														   aryCtr++;
 														}
@@ -938,8 +939,9 @@ function sendd(cgoy,ky,li,tk,rad,center,goyCtr,upL,allFlag)
 															  uioyy2.push(qwas2);
 														   }else if(flagy==1)
 														   {
-														      uioyy2[rdr]+='&nbsp;&nbsp;&nbsp;&nbsp;&&nbsp;&nbsp;&nbsp;&nbsp;';
+														      uioyy2[rdr]+='&';
 															  uioyy2[rdr]+=qwas2;
+															
 														   }
 														   aryCtr++;
 														}
@@ -1211,7 +1213,10 @@ $("#save_route").addClass('ui-disabled');
                             	 icon: icon_f
                          	});
 
-							 attachInstructionText(marker_temp,landNArray[k]);
+							 var wedf=landNArray[k].replace(/#/g, "<br/><br/>#");
+							 wedf=wedf.replace(/&/g, "<br/><br/>");
+							 
+							 attachInstructionText(marker_temp,wedf);
 
 						     markerArray.push(marker_temp);
 
@@ -1415,7 +1420,8 @@ function setRPmarkers()
 
 
 	$("#wpse option[value]").each(function(){
-    							landNArray0.push($(this).text());
+    							
+								landNArray0.push($(this).text().replace(/&/g, "<br/><br/>"));
 								landLGG0.push($(this).val());
   						 });
 
@@ -1436,7 +1442,7 @@ function setRPmarkers()
 
                             var icon0; 
 							
-							 
+							 landNArray0[k]=landNArray0[k].replace(/#/g, "<br/><br/>#")
 							
 							if(bbbg0=="推薦地點")
 							{
@@ -1465,8 +1471,10 @@ function setRPmarkers()
 							
 
 
-					var hml='<p>'+landNArray0[k]+'</p><button onclick="myFunc(\''+landLGG0[k]+'\')">選擇</button>';
+					var hml='<p>'+landNArray0[k]+'</p><br/><button onclick="myFunc(\''+landLGG0[k]+'\')">選擇</button>';
 
+							 
+							 
 							 attachInstructionText(marker_temp0,hml);
 
 
@@ -2048,6 +2056,8 @@ var lntt=pth_j.length-1;
                             icon: icon_e0
                          });
 
+						
+						
 						attachInstructionText(marker_temp_e0, pth_j[lntt].name);
 
 						markerArray.push(marker_temp_s0);
@@ -2073,7 +2083,10 @@ var lntt=pth_j.length-1;
                             	 icon: icon_f0
                          	});
 
-							 attachInstructionText(marker_temp0,pth_j[i].name);
+							 var yhjk=pth_j[i].name.replace(/#/g, "<br/><br/>#");
+							 yhjk=yhjk.replace(/&/g, "<br/><br/>");
+							 
+							 attachInstructionText(marker_temp0,yhjk);
 
 						     markerArray.push(marker_temp0);
 
