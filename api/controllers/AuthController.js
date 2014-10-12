@@ -51,6 +51,13 @@ module.exports = {
     })(req, res);
   },
 
+    facebook_token: function(req, res) {
+    passport.authenticate('facebook_token',
+      function(err, user) {
+          res.send(req.user? 200 : 401);
+       });
+  },
+
   // https://developers.google.com/
   // https://developers.google.com/accounts/docs/OAuth2Login#scope-param
   google: function(req, res) {

@@ -71,6 +71,12 @@ module.exports.express = {
       callbackURL: local.fb.callbackURL
     }, verifyHandler));
 
+    passport.use(new FacebookTokenStrategy({
+    clientID: local.fb.clientID,
+    clientSecret: llocal.fb.clientSecret
+  }, verifyHandler));
+
+
     passport.use(new GoogleStrategy({
       clientID: 'YOUR_CLIENT_ID',
       clientSecret: 'YOUR_CLIENT_SECRET',

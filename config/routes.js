@@ -43,6 +43,10 @@ module.exports.routes = {
     controller : 'auth',
     action: 'isAuthenticated'
   },
+  '/android_login' : {
+    controller : 'auth',
+    action     : 'facebook_token'
+  },
   '/check_roadpoint':{
     controller : 'roadpoint',
     action : 'check_roadpoint'
