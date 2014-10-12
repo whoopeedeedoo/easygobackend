@@ -3,6 +3,7 @@ var local = require('./local');
 var passport = require('passport')
     , GitHubStrategy = require('passport-github').Strategy
     , FacebookStrategy = require('passport-facebook').Strategy
+    , FacebookTokenStrategy = require('passport-facebook-token').Strategy
     , GoogleStrategy = require('passport-google-oauth').OAuth2Strategy
     , TwitterStrategy = require('passport-twitter').Strategy;
 
@@ -73,7 +74,7 @@ module.exports.express = {
 
     passport.use(new FacebookTokenStrategy({
     clientID: local.fb.clientID,
-    clientSecret: llocal.fb.clientSecret
+    clientSecret: local.fb.clientSecret
   }, verifyHandler));
 
 
