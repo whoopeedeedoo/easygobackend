@@ -55,6 +55,7 @@ module.exports = {
     passport.authenticate('facebook_token',
       function(err, user) {
           res.send(req.user? 200 : 401);
+          //for android
        });
   },
 
