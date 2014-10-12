@@ -52,11 +52,21 @@ module.exports = {
   },
 
     facebook_token: function(req, res) {
+
+        console.log("outside");
+        /*
     passport.authenticate('facebook_token',
       function(err, user) {
-          res.send(req.user? 200 : 401);
-          //for android
+        console.log("inside");
+        console.log(req.user);
+        res.json(req.user);
+        //for android
+
+
        });
+       */
+       console.log(req.body);
+       res.json(req.body);
   },
 
   // https://developers.google.com/
