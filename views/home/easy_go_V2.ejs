@@ -123,12 +123,10 @@ max-width: 100%;
         起點：<br>
         <input type="text" id="start" data-mini="true">
         <a href="#" data-role="button" id="d1" data-inline="true" data-mini="true">現在位置</a>
-        <a href="#" data-role="button" id="b1" data-inline="true" data-mini="true">確認起點</a>
         <br>
         終點：<br>
         <input type="text" id="end" data-mini="true">
         <a href="#" data-role="button" id="d2" data-inline="true" data-mini="true">現在位置</a>
-        <a href="#" data-role="button" id="b2" data-inline="true" data-mini="true">確認終點</a><br><br>
 
       <div data-role="collapsible" data-mini="true" id="bigger">
    <h3>路點類型</h3>
@@ -219,14 +217,13 @@ max-width: 100%;
 
 
         路點關鍵字：<br>
-        <input type="search" name="keyword" id="key" data-mini="true"><br>
+        <input type="search" name="keyword" id="key" data-mini="true">
 
-        <a href="#" data-role="button" id="rwp" data-mini="true">搜尋路點</a><br>
+        <a href="#" data-role="button" id="rwp" data-mini="true" style="margin-top:10px;">搜尋路點</a>
 
-		<a href="#" data-role="button" id="save_route" data-mini="true">收藏路線</a><br>
+		<a href="#" data-role="button" id="save_route" data-mini="true" style="margin-top:10px;">收藏路線</a><br>
 
-        <div id="selectList0">
-
+        <div id="selectList0" style="padding-top:0px;">
         </div>
 
 		</div>
@@ -312,6 +309,7 @@ var addr_s;
 var addr_e;
 var markerArray=[];
 var markerArray0=[];
+var markerArrayt=[];
 var flagFinded;
 var stepDisplay;
 var page_map_sve_flg=0;
@@ -319,6 +317,7 @@ var uid=null;
 var autoLatLng=[];
 var autoName=[];
 var resp=null;
+var mygodd=0;
 
 $( document ).on( "pageshow", "#page_his", function() {
 
@@ -349,8 +348,9 @@ $( document ).on( "pageshow", "#page_his", function() {
 
                 						success: function(msg){
 
-
-
+										      alertify.success("找到"+msg.length+"條路線");
+										   
+										   
 										   for(i=0;i<msg.length;i++)
 										   {
 
@@ -444,9 +444,13 @@ $( document ).on( "pageshow", "#page_1", function() {
 
 $( document ).on( "pageshow", "#map-page", function() {
 
+if(map!=null)
+{
+	google.maps.event.trigger(map, "resize");  
+}
+
+
 hisRT();
-
-
 
 $.ajax({
                 url: '/isAuthenticated',
@@ -522,7 +526,7 @@ $("#bigger").on( "collapsibleexpand",function() {
 
 	var offst = $("#popupBasic").offset();
 
-	$("#popupBasic-screen").height(offst.top+ $("#popupBasic").outerHeight());
+	$("#popupBasic-screen").height(offst.top+ $("#popupBasic").outerHeight()+25);
 
 
 });
@@ -530,7 +534,7 @@ $("#bigger").on( "collapsibleexpand",function() {
 $("#bigger").on( "collapsiblecollapse",function() {
 
 
-	$("#popupBasic-screen").height(window.innerHeight);
+	$("#popupBasic-screen").height(window.innerHeight+20);
 
 
 });
@@ -542,9 +546,9 @@ $("#popupBasic").on( "popupafteropen",function() {
 
 	var offst = $("#popupBasic").offset();
 
-	$("#popupBasic-screen").height(offst.top+ $("#popupBasic").outerHeight());
+	$("#popupBasic-screen").height(offst.top+ $("#popupBasic").outerHeight()+25);
 
-	}
+	}else{$("#popupBasic-screen").height(window.innerHeight+20);}
 
 	//$('ul.load_details').css({visibility,"visible"});
 $("#map-canvas").css({visibility:"hidden"});
@@ -559,6 +563,16 @@ $("#popupBasic").on( "popupafterclose",function() {
 $("#map-canvas").css({visibility:"visible"});
 $("#hdr").css({visibility:"visible"});
 $("#ftr").css({visibility:"visible"});
+
+if(mygodd==1){
+
+for(i=0;i<markerArrayt.length;i++)
+		{	
+			markerArrayt[i].setMap(map);
+			markerArrayt[i].setAnimation(google.maps.Animation.BOUNCE);
+			google.maps.event.trigger(map,"resize");
+		}
+}
 
 
 });
@@ -618,8 +632,7 @@ $("#d2").on( "click",function() {
 
 
 setRWP();
-setB1();
-setB2();
+
 
 
 });
@@ -817,6 +830,7 @@ function sendd(cgoy,ky,li,tk,rad,center,goyCtr,upL,allFlag)
 														var aryCtr=0;
 														var uioyy=[];
 														var uioyy2=[];
+														var rdr;
 														
 														while((uioyy.length<20)&&(aryCtr<Jdata3.data.length))
 														{
@@ -840,7 +854,8 @@ function sendd(cgoy,ky,li,tk,rad,center,goyCtr,upL,allFlag)
 															  
 															  if(qwas==uioyy[iu])
 															  {
-															    flagy=1;
+															    rdr=iu;
+																flagy=1;
 																
 															  }
 														   }
@@ -850,6 +865,11 @@ function sendd(cgoy,ky,li,tk,rad,center,goyCtr,upL,allFlag)
 														   {
 														      uioyy.push(qwas);
 															  uioyy2.push(qwas2);
+														   }else if(flagy==1)
+														   {
+														      uioyy2[rdr]+='&';
+															  uioyy2[rdr]+=qwas2;
+														
 														   }
 														   aryCtr++;
 														}
@@ -883,6 +903,7 @@ function sendd(cgoy,ky,li,tk,rad,center,goyCtr,upL,allFlag)
 													var aryCtr=0;
 														var uioyy=[];
 														var uioyy2=[];
+														var rdr;
 														
 														while((uioyy.length<Jdata3.data.length)&&(aryCtr<Jdata3.data.length))
 														{
@@ -906,8 +927,8 @@ function sendd(cgoy,ky,li,tk,rad,center,goyCtr,upL,allFlag)
 															  
 															  if(qwas==uioyy[iu])
 															  {
-															    flagy=1;
-																
+															    rdr=iu;
+																flagy=1;
 															  }
 														   }
 														   }
@@ -916,6 +937,11 @@ function sendd(cgoy,ky,li,tk,rad,center,goyCtr,upL,allFlag)
 														   {
 														      uioyy.push(qwas);
 															  uioyy2.push(qwas2);
+														   }else if(flagy==1)
+														   {
+														      uioyy2[rdr]+='&';
+															  uioyy2[rdr]+=qwas2;
+															
 														   }
 														   aryCtr++;
 														}
@@ -951,13 +977,13 @@ function sendd(cgoy,ky,li,tk,rad,center,goyCtr,upL,allFlag)
 
 											if(flagFinded==0){
 
-											  $("#selectList0").html('沒有找到任何路點');
+											  $("#selectList0").html('沒有找到任何路點'); 
+											  
 											  
 											  $("#wpse").html('<option>請先搜尋路點</option>');
 											  $("#wpse").selectmenu('refresh');
 											  setRWP();
-											  setB1();
-											  setB2();
+										
 											  $( "#popupBasic" ).popup( "close" );
 											  alertify.log('沒有找到任何路點');
 
@@ -965,6 +991,7 @@ function sendd(cgoy,ky,li,tk,rad,center,goyCtr,upL,allFlag)
 											}else if(flagFinded>0)
 											{
 											  $("#selectList0").html('找到'+flagFinded+'個路點');
+											  
 
 										 $( "#popupBasic" ).popup( "close" );
 										alertify.success('找到'+flagFinded+'個路點');
@@ -1186,7 +1213,10 @@ $("#save_route").addClass('ui-disabled');
                             	 icon: icon_f
                          	});
 
-							 attachInstructionText(marker_temp,landNArray[k]);
+							 var wedf=landNArray[k].replace(/#/g, "<br/><br/>#");
+							 wedf=wedf.replace(/&/g, "<br/><br/>");
+							 
+							 attachInstructionText(marker_temp,wedf);
 
 						     markerArray.push(marker_temp);
 
@@ -1266,8 +1296,7 @@ $("#save_route").addClass('ui-disabled');
 });
 
 setRWP();
-setB1();
-setB2();
+
 
 
 	$("#crossBTN").on( "click",function() {
@@ -1333,8 +1362,7 @@ setB2();
 											},//success
 											error: function(xhr, ajaxOptions, thrownError) {
 									           setRWP();
-											   setB1();
-                                               setB2();
+											
 											   alert.error(thrownError);
 
                      			            }
@@ -1392,7 +1420,8 @@ function setRPmarkers()
 
 
 	$("#wpse option[value]").each(function(){
-    							landNArray0.push($(this).text());
+    							
+								landNArray0.push($(this).text().replace(/&/g, "<br/><br/>"));
 								landLGG0.push($(this).val());
   						 });
 
@@ -1413,7 +1442,7 @@ function setRPmarkers()
 
                             var icon0; 
 							
-							 
+							 landNArray0[k]=landNArray0[k].replace(/#/g, "<br/><br/>#")
 							
 							if(bbbg0=="推薦地點")
 							{
@@ -1437,23 +1466,39 @@ function setRPmarkers()
                             	 map: map,
 								 icon: icon0
                          	});
+							
+							
+							
 
 
+					var hml='<p>'+landNArray0[k]+'</p><br/><button onclick="myFunc(\''+landLGG0[k]+'\')">選擇</button>';
 
-							 var hml='<p>'+landNArray0[k]+'</p><button onclick="myFunc(\''+landLGG0[k]+'\')">選擇</button>';
-
+							 
+							 
 							 attachInstructionText(marker_temp0,hml);
 
 
-							 markerArray0.push(marker_temp0);
-
-
+							 if(bbbg0=="推薦地點")
+							{
+								 markerArrayt.push(marker_temp0);
+							}else
+							{
+							     markerArray0.push(marker_temp0);
+							}
+							 
+                               
 
 						 }
 
 
 
-
+for(i=0;i<markerArrayt.length;i++)
+{
+		
+	markerArrayt[i].setAnimation(google.maps.Animation.BOUNCE);
+			
+}
+mygodd=1;
 
 
 }
@@ -1480,6 +1525,15 @@ function invibleRPmarkers()
 			google.maps.event.trigger(map,"resize");
 
 		}
+		
+		for(i=0;i<markerArrayt.length;i++)
+		{
+			markerArrayt[i].setMap(null);
+			google.maps.event.trigger(map,"resize");
+
+		}
+		
+		mygodd=0;
 
 }
 
@@ -1497,6 +1551,15 @@ function showRPmarkers()
 			markerArray0[i].setMap(map);
 			google.maps.event.trigger(map,"resize");
 		}
+		
+		for(i=0;i<markerArrayt.length;i++)
+		{
+			markerArrayt[i].setMap(map);
+			markerArrayt[i].setAnimation(google.maps.Animation.BOUNCE);
+			google.maps.event.trigger(map,"resize");
+		}
+		
+		mygodd=1;
 }
 
 function killRPmarkers()
@@ -1505,10 +1568,17 @@ function killRPmarkers()
 		{
 			markerArray0[i].setMap(null);
 			google.maps.event.trigger(map,"resize");
-
-
 		}
 		markerArray0=[];
+		
+		for(i=0;i<markerArrayt.length;i++)
+		{
+			markerArrayt[i].setMap(null);
+			google.maps.event.trigger(map,"resize");
+		}
+		markerArrayt=[];
+		
+		mygodd=0;
 
 }
 
@@ -1552,21 +1622,53 @@ function myFunc(bbbd)
 
 function setRWP()
 {
+	
 	$("#rwp").on( "click",function() {
-
-	        if((sp!=null)&&(ep!=null)){
-
-
+			
+			
+			if(($("#end").val()!='')&&($("#start").val()!='')){
+ 
 					   $("#rwp").off();
-					    $("#b1").off();
-						 $("#b2").off();
+					      
+					     
+   var address0 = $("#start").val();
 
+   addr_s=address0;
+    geocoder.geocode( { 'address': address0}, function(results, status) {
+      if (status == google.maps.GeocoderStatus.OK) {
+        map.setCenter(results[0].geometry.location);
+        if(marker_s!=null)
+		{
+			marker_s.setMap(null);
+			google.maps.event.trigger(map, "resize");
+		}
+		marker_s = new google.maps.Marker({
+            map: map,
+            position: results[0].geometry.location
+        });
+		sp=results[0].geometry.location;
+		
+		 		var address1 = $("#end").val();
 
-					   $.ajax(
+   				addr_e=address1;
+    			geocoder.geocode( { 'address': address1}, function(results1, status1) {
+      				if (status1 == google.maps.GeocoderStatus.OK) {
+        			map.setCenter(results1[0].geometry.location);
+					if(marker_e!=null)
+					{
+						marker_e.setMap(null);
+						google.maps.event.trigger(map,"resize");
+					}
+        			marker_e = new google.maps.Marker({
+            			map: map,
+            			position: results1[0].geometry.location
+        			});
+					ep=results1[0].geometry.location;
+		
+
+      				 $.ajax(
 				 			{
-                                //url: '/proxy.php',
-							    //async: false,
-				     			//type: 'GET',
+                               
                                 url: "/fbapi/token",
                                 type: "POST",
 	  				 			dataType: "json",
@@ -1610,6 +1712,10 @@ function setRWP()
 
 
 									$("#selectList0").html('載入中請耐心等候');
+									 
+									
+									
+									
 											$("#wpse").off();
         									$("#wpse").html('');
 											$("#crossBTN").off();
@@ -1673,6 +1779,21 @@ $("#save_route").addClass('ui-disabled');
 									alertify.error(thrownError);
                      			}
                  		 });
+					
+					
+					} else {
+        				alertify.error("終點定位失敗");
+						setRWP();
+      				}
+    			});
+
+      } else {
+        alertify.error("起點定位失敗");
+		setRWP();
+      }
+    });
+					   
+
 			}
 
 });
@@ -1680,152 +1801,9 @@ $("#save_route").addClass('ui-disabled');
 
 }
 
-function setB1()
-{
-	$("#b1").on( "click",function() {
-   var address = $("#start").val();
-   addr_s=address;
-    geocoder.geocode( { 'address': address}, function(results, status) {
-      if (status == google.maps.GeocoderStatus.OK) {
-        map.setCenter(results[0].geometry.location);
-        if(marker_s!=null)
-		{
-			marker_s.setMap(null);
-			google.maps.event.trigger(map, "resize");
-		}
-		marker_s = new google.maps.Marker({
-            map: map,
-            position: results[0].geometry.location
-        });
-		sp=results[0].geometry.location;
 
-		$("#selectList0").html('');
-		$("#wpse").off();
-		$("#crossBTN").off();
+	
 
-        $("#wpse").html('<option>請先搜尋路點</option>');
-		$("#wpse").selectmenu('refresh');
-		$("#wpse").selectmenu('disable');
-		$("#r1").off();
-		$("#rdmBtn").off();
-
-						$("#run").addClass('ui-disabled');
-		 				$("#ftrr").html("");
-						$('#ftrl').html("");
-		 				tctr=0;
-		                s_flag=0;
-						clearInterval(timeoutId);
-			            clearInterval(timeoutId2);
-			            if(marker_rt!=null)
-					    {
-							marker_rt.setMap(null);
-							google.maps.event.trigger(map, "resize");
-						}
-			            $("#run").html('START');
-
-						$("#run").off();
-						if(directionsDisplay!=null)
-						{
-							directionsDisplay.setMap(null);
-							google.maps.event.trigger(map,"resize");
-						}
-						google.maps.event.clearListeners(map, "click");
-						for(p=0;p<markerArray.length;p++)
-						{
-							markerArray[p].setMap(null);
-							google.maps.event.trigger(map, "resize");
-						}
-						markerArray=[];
-
-$("#save_route").off();
-autoLatLng=[];
-autoName=[];
-resp=null;
-$("#save_route").addClass('ui-disabled');
-
-						killRPmarkers();
-						alertify.success('已確認起點');
-
-
-      } else {
-        alertify.error("定位失敗");
-      }
-    });
-});
-}
-
-function setB2()
-{
-	$("#b2").on( "click",function() {
-   var address = $("#end").val();
-   addr_e=address;
-    geocoder.geocode( { 'address': address}, function(results, status) {
-      if (status == google.maps.GeocoderStatus.OK) {
-        map.setCenter(results[0].geometry.location);
-		if(marker_e!=null)
-		{
-			marker_e.setMap(null);
-			google.maps.event.trigger(map,"resize");
-		}
-        marker_e = new google.maps.Marker({
-            map: map,
-            position: results[0].geometry.location
-        });
-		ep=results[0].geometry.location;
-
-		$("#selectList0").html('');
-		$("#wpse").off();
-		$("#crossBTN").off();
-        $("#wpse").html('<option>請先搜尋路點</option>');
-		$("#wpse").selectmenu('refresh');
-		$("#wpse").selectmenu('disable');
-		$("#r1").off();
-		$("#rdmBtn").off();
-
-		                $("#run").addClass('ui-disabled');
-		 				$("#ftrr").html("");
-						$('#ftrl').html("");
-		 				tctr=0;
-		                s_flag=0;
-						clearInterval(timeoutId);
-			            clearInterval(timeoutId2);
-			            if(marker_rt!=null)
-					    {
-							marker_rt.setMap(null);
-							google.maps.event.trigger(map, "resize");
-						}
-			            $("#run").html('START');
-
-						$("#run").off();
-						if(directionsDisplay!=null)
-						{
-							directionsDisplay.setMap(null);
-							google.maps.event.trigger(map,"resize");
-						}
-						google.maps.event.clearListeners(map, "click");
-						for(p=0;p<markerArray.length;p++)
-						{
-							markerArray[p].setMap(null);
-							google.maps.event.trigger(map, "resize");
-						}
-						markerArray=[];
-
-$("#save_route").off();
-autoLatLng=[];
-autoName=[];
-resp=null;
-$("#save_route").addClass('ui-disabled');
-
-						killRPmarkers();
-						alertify.success('已確認終點');
-
-
-      } else {
-        alertify.error("定位失敗");
-      }
-    });
-});
-}
 
 
 function setSave()
@@ -1840,6 +1818,7 @@ var arry00=[];
 $("#save_route").off();
 
 $("#selectList0").html('收藏中請稍候');
+
 
 var spt=sp.lat()+','+sp.lng();
 var ept=ep.lat()+','+ep.lng();
@@ -1871,6 +1850,8 @@ dts00={ path: arry00, userid: uid};
 
                 success: function(msg){
 				$("#selectList0").html('收藏完成');
+	
+				
 				$( "#popupBasic" ).popup( "close" );
 				alertify.success("收藏完成");
 
@@ -1917,6 +1898,9 @@ function hisRT()
 	$("#end").val('');
 
   $("#selectList0").html('');
+
+  
+  
 		$("#wpse").off();
 		$("#crossBTN").off();
 
@@ -2072,6 +2056,8 @@ var lntt=pth_j.length-1;
                             icon: icon_e0
                          });
 
+						
+						
 						attachInstructionText(marker_temp_e0, pth_j[lntt].name);
 
 						markerArray.push(marker_temp_s0);
@@ -2097,7 +2083,10 @@ var lntt=pth_j.length-1;
                             	 icon: icon_f0
                          	});
 
-							 attachInstructionText(marker_temp0,pth_j[i].name);
+							 var yhjk=pth_j[i].name.replace(/#/g, "<br/><br/>#");
+							 yhjk=yhjk.replace(/&/g, "<br/><br/>");
+							 
+							 attachInstructionText(marker_temp0,yhjk);
 
 						     markerArray.push(marker_temp0);
 
