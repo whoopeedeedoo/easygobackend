@@ -43,7 +43,7 @@ module.exports.routes = {
     controller : 'auth',
     action: 'isAuthenticated'
   },
-  '/android_login' : {
+  'post /android_login' : {
     controller : 'auth',
     action     : 'facebook_token'
   },

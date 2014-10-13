@@ -9,6 +9,8 @@ var passport = require('passport')
 
 
 var verifyHandler = function(token, tokenSecret, profile, done) {
+  //console.log(token+"\n");
+
   process.nextTick(function() {
 
     User.findOne({uid: profile.id}, function(err, user) {
@@ -21,6 +23,7 @@ var verifyHandler = function(token, tokenSecret, profile, done) {
           uid: profile.id,
           name: profile.displayName
         };
+
 
         if (profile.emails && profile.emails[0] && profile.emails[0].value) {
           data.email = profile.emails[0].value;
@@ -41,10 +44,12 @@ var verifyHandler = function(token, tokenSecret, profile, done) {
 };
 
 passport.serializeUser(function(user, done) {
+  console.log("serializeUser\n"+JSON.stringify(user));
   done(null, user.uid);
 });
 
 passport.deserializeUser(function(uid, done) {
+  console.log("deserializeUser\n"+uid);
   User.findOne({uid: uid}, function(err, user) {
     done(err, user)
   });
@@ -74,9 +79,10 @@ module.exports.express = {
 
     passport.use(new FacebookTokenStrategy({
     clientID: local.fb.clientID,
-    clientSecret: local.fb.clientSecret,
-      callbackURL: local.fb.callbackURL
+    clientSecret: local.fb.clientSecret
   }, verifyHandler));
+
+
 
     passport.use(new GoogleStrategy({
       clientID: 'YOUR_CLIENT_ID',

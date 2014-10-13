@@ -52,21 +52,20 @@ module.exports = {
   },
 
     facebook_token: function(req, res) {
-
-        console.log("outside");
-        /*
-    passport.authenticate('facebook_token',
-      function(err, user) {
-        console.log("inside");
-        console.log(req.user);
-        res.json(req.user);
-        //for android
-
-
-       });
-       */
-       console.log(req.body);
-       res.json(req.body);
+        console.log("start");
+    passport.authenticate('facebook-token', { failureRedirect: '/android_login', scope: ['access_token'] }, function(err, user) {
+      //When the login operation completes, user will be assigned to req.user.
+      req.logIn(user, function(err) {
+        if (err) {
+          console.log(err);
+        }
+        var info = {message:"yes"};
+        info.message = "yes";
+        info = _.extend(info, req.user);
+        res.json(info);
+      });
+    })(req, res);
+    console.log("end");
   },
 
   // https://developers.google.com/
@@ -104,6 +103,7 @@ module.exports = {
   },
 
   isAuthenticated: function(req, res){
+        console.log("isAuthenticated "+req.isAuthenticated());
    var info = {message:"no"};
     if(req.isAuthenticated())
     {
