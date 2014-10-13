@@ -52,7 +52,6 @@ module.exports = {
   },
 
     facebook_token: function(req, res) {
-        console.log("start");
     passport.authenticate('facebook-token', { failureRedirect: '/android_login', scope: ['access_token'] }, function(err, user) {
       //When the login operation completes, user will be assigned to req.user.
       req.logIn(user, function(err) {
@@ -65,7 +64,6 @@ module.exports = {
         res.json(info);
       });
     })(req, res);
-    console.log("end");
   },
 
   // https://developers.google.com/
